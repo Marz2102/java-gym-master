@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class TimetableTest {
 
     @Test
@@ -18,8 +21,11 @@ public class TimetableTest {
 
         timetable.addNewTrainingSession(singleTrainingSession);
 
-        //Проверить, что за понедельник вернулось одно занятие
-        //Проверить, что за вторник не вернулось занятий
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY).size(), 1),
+                () -> Assertions.assertNull(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY))
+        );
+
     }
 
     @Test
@@ -62,8 +68,13 @@ public class TimetableTest {
 
         timetable.addNewTrainingSession(singleTrainingSession);
 
-        //Проверить, что за понедельник в 13:00 вернулось одно занятие
-        //Проверить, что за понедельник в 14:00 не вернулось занятий
+        TimeOfDay firstDateTime = new TimeOfDay(13, 0);
+        TimeOfDay secondDateTime = new TimeOfDay(14, 0);
+
+        Assertions.assertAll(
+                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, firstDateTime).size(), 1),
+                () -> Assertions.assertNull(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, secondDateTime))
+        );
     }
 
 }
