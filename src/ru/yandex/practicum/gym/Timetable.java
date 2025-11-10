@@ -26,12 +26,12 @@ public class Timetable {
         coachTrainings.put(coach, coachTrainings.get(coach) + 1);
     }
 
-    public Map<TimeOfDay, ArrayList<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
-        return Collections.unmodifiableMap(timetable.get(dayOfWeek));
+    public SortedMap<TimeOfDay, ArrayList<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+        return Collections.unmodifiableSortedMap(timetable.getOrDefault(dayOfWeek, new TreeMap<>()));
     }
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
-        return Collections.unmodifiableList(timetable.get(dayOfWeek).get(timeOfDay));
+        return Collections.unmodifiableList(timetable.getOrDefault(dayOfWeek, new TreeMap<>()).getOrDefault(timeOfDay, new ArrayList<>()));
     }
 
     public List<CounterOfTrainings> getCountByCoaches() {
