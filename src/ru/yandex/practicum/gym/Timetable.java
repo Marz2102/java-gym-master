@@ -4,17 +4,43 @@ import java.util.*;
 
 public class Timetable {
 
-    private /* как это хранить??? */ timetable;
+    private final Map<DayOfWeek, TreeMap<TimeOfDay, ArrayList<TrainingSession>>> timetable = new HashMap<>();
+    private final Map<Coach, Integer> coachTrainings = new HashMap<>();
 
     public void addNewTrainingSession(TrainingSession trainingSession) {
-        //сохраняем занятие в расписании
+        DayOfWeek dayOfWeek = trainingSession.getDayOfWeek();
+        TimeOfDay timeOfDay = trainingSession.getTimeOfDay();
+        Coach coach = trainingSession.getCoach();
+
+        if (!timetable.containsKey(dayOfWeek)) {
+            timetable.put(dayOfWeek, new TreeMap<>());
+        }
+        if (!timetable.get(dayOfWeek).containsKey(timeOfDay)) {
+            timetable.get(dayOfWeek).put(timeOfDay, new ArrayList<>());
+        }
+        timetable.get(dayOfWeek).get(timeOfDay).add(trainingSession);
+
+        if (!coachTrainings.containsKey(coach)) {
+            coachTrainings.put(coach, 0);
+        }
+        coachTrainings.put(coach, coachTrainings.get(coach) + 1);
     }
 
-    public /* непонятно, что возвращать */ getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
-        //как реализовать, тоже непонятно, но сложность должна быть О(1)
+    public SortedMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+        return Collections.unmodifiableSortedMap(timetable.getOrDefault(dayOfWeek, new TreeMap<>()));
     }
 
-    public /* непонятно, что возвращать */ getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
-        //как реализовать, тоже непонятно, но сложность должна быть О(1)
+    public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
+        return Collections.unmodifiableList(timetable.getOrDefault(dayOfWeek, new TreeMap<>()).getOrDefault(timeOfDay, new ArrayList<>()));
+    }
+
+    public List<CounterOfTrainings> getCountByCoaches() {
+        List<CounterOfTrainings> counterOfTrainings = new ArrayList<>();
+        for (Coach coach : coachTrainings.keySet()) {
+            counterOfTrainings.add(new CounterOfTrainings(coach, coachTrainings.get(coach)));
+        }
+
+        Collections.sort(counterOfTrainings);
+        return Collections.unmodifiableList(counterOfTrainings);
     }
 }
