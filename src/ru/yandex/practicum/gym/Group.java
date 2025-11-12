@@ -33,11 +33,11 @@ public class Group {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Group group = (Group) o;
-        return duration == group.duration && title.equals(group.title) && age.equals(group.age);
+        return Objects.equals(title, group.title) && age == group.age && duration == group.duration;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(duration, title, age);
+        return Objects.hash(title, age, duration);
     }
 }

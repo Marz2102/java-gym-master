@@ -26,7 +26,7 @@ public class Timetable {
         coachTrainings.put(coach, coachTrainings.get(coach) + 1);
     }
 
-    public SortedMap<TimeOfDay, ArrayList<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+    public SortedMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
         return Collections.unmodifiableSortedMap(timetable.getOrDefault(dayOfWeek, new TreeMap<>()));
     }
 

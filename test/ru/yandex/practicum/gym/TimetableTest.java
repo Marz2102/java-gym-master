@@ -22,7 +22,7 @@ public class TimetableTest {
         timetable.addNewTrainingSession(singleTrainingSession);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY).size(), 1),
+                () -> Assertions.assertEquals(1, timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY).size()),
                 () -> Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY).isEmpty())
         );
     }
@@ -50,11 +50,11 @@ public class TimetableTest {
         timetable.addNewTrainingSession(saturdayChildTrainingSession);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY).size(), 1),
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).firstKey(), new TimeOfDay(13, 0)),
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).lastKey(), new TimeOfDay(20, 0)),
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).firstEntry().getValue().size(), 1),
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).lastEntry().getValue().size(), 1),
+                () -> Assertions.assertEquals(1, timetable.getTrainingSessionsForDay(DayOfWeek.MONDAY).size()),
+                () -> Assertions.assertEquals(new TimeOfDay(13, 0), timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).firstKey()),
+                () -> Assertions.assertEquals(new TimeOfDay(20, 0), timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).lastKey()),
+                () -> Assertions.assertEquals(1, timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).firstEntry().getValue().size()),
+                () -> Assertions.assertEquals(1, timetable.getTrainingSessionsForDay(DayOfWeek.THURSDAY).lastEntry().getValue().size()),
                 () -> Assertions.assertTrue(timetable.getTrainingSessionsForDay(DayOfWeek.TUESDAY).isEmpty())
         );
     }
@@ -72,7 +72,7 @@ public class TimetableTest {
         TimeOfDay secondDateTime = new TimeOfDay(14, 0);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, firstDateTime).size(), 1),
+                () -> Assertions.assertEquals(1, timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, firstDateTime).size()),
                 () -> Assertions.assertTrue(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, secondDateTime).isEmpty())
         );
     }
@@ -97,7 +97,7 @@ public class TimetableTest {
 
         TimeOfDay firstDateTime = new TimeOfDay(13, 0);
 
-        Assertions.assertEquals(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, firstDateTime).size(), 2);
+        Assertions.assertEquals(2, timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, firstDateTime).size());
     }
 
     @Test
@@ -111,8 +111,8 @@ public class TimetableTest {
         timetable.addNewTrainingSession(singleTrainingSessionChild);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, new TimeOfDay(13, 0)).getFirst().getGroup(), group),
-                () -> Assertions.assertEquals(timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, new TimeOfDay(13, 0)).getFirst().getCoach(), coach)
+                () -> Assertions.assertEquals(group, timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, new TimeOfDay(13, 0)).getFirst().getGroup()),
+                () -> Assertions.assertEquals(coach, timetable.getTrainingSessionsForDayAndTime(DayOfWeek.MONDAY, new TimeOfDay(13, 0)).getFirst().getCoach())
         );
     }
 
@@ -146,10 +146,10 @@ public class TimetableTest {
         timetable.addNewTrainingSession(secondTrainingSessionChild);
 
         Assertions.assertAll(
-                () -> Assertions.assertEquals(timetable.getCountByCoaches().getFirst().getCoach(), coachChild),
-                () -> Assertions.assertEquals(timetable.getCountByCoaches().getLast().getCoach(), coachAdult),
-                () -> Assertions.assertEquals(timetable.getCountByCoaches().getFirst().getCountOfTrainings(), 2),
-                () -> Assertions.assertEquals(timetable.getCountByCoaches().getLast().getCountOfTrainings(), 1)
+                () -> Assertions.assertEquals(coachChild, timetable.getCountByCoaches().getFirst().getCoach()),
+                () -> Assertions.assertEquals(coachAdult, timetable.getCountByCoaches().getLast().getCoach()),
+                () -> Assertions.assertEquals(2, timetable.getCountByCoaches().getFirst().getCountOfTrainings()),
+                () -> Assertions.assertEquals(1, timetable.getCountByCoaches().getLast().getCountOfTrainings())
         );
     }
 
